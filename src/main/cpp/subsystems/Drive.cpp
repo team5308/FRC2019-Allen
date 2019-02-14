@@ -25,13 +25,13 @@ std::shared_ptr<frc::DifferentialDrive> Drive::DIFF;
 Drive::Drive() : Subsystem("ExampleSubsystem") {
   JOY.reset(new frc::Joystick(1));
 
-  CSM_NEO_LEFT.reset(new rev::CANSparkMax(1,rev::CANSparkMax::MotorType::kBrushless));
-  CSM_CIM_LEFT.reset(new rev::CANSparkMax(2,rev::CANSparkMax::MotorType::kBrushed));
-  TAL_CIM_LEFT.reset(new WPI_TalonSRX(20));
+  CSM_NEO_LEFT.reset(new rev::CANSparkMax(6,rev::CANSparkMax::MotorType::kBrushless));
+  CSM_CIM_LEFT.reset(new rev::CANSparkMax(7,rev::CANSparkMax::MotorType::kBrushed));
+  TAL_CIM_LEFT.reset(new WPI_TalonSRX(21));
 
-  CSM_NEO_RIGHT.reset(new rev::CANSparkMax(3,rev::CANSparkMax::MotorType::kBrushless));
-  CSM_CIM_RIGHT.reset(new rev::CANSparkMax(4,rev::CANSparkMax::MotorType::kBrushed));
-  TAL_CIM_RIGHT.reset(new WPI_TalonSRX(21)); 
+  CSM_NEO_RIGHT.reset(new rev::CANSparkMax(4,rev::CANSparkMax::MotorType::kBrushless));
+  CSM_CIM_RIGHT.reset(new rev::CANSparkMax(5,rev::CANSparkMax::MotorType::kBrushed));
+  TAL_CIM_RIGHT.reset(new WPI_TalonSRX(25)); 
 
   SCG_LEFT = std::make_shared<frc::SpeedControllerGroup>(*CSM_CIM_LEFT,*TAL_CIM_LEFT);
   SCG_RIGHT = std::make_shared<frc::SpeedControllerGroup>(*CSM_CIM_RIGHT,*TAL_CIM_RIGHT);
