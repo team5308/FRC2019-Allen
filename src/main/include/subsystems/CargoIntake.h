@@ -11,22 +11,26 @@
 #include <rev/CANSparkMax.h>
 #include <rev/CANEncoder.h>
 #include <frc/WPILib.h>
+#include <ctre/Phoenix.h>
 
 #include "RevDigit.h"
 
 class CargoIntake : public frc::Subsystem {
- private:
+ public:
 
   static std::shared_ptr<rev::CANSparkMax> CSM_NEO_Rab;
   static std::shared_ptr<rev::CANEncoder> CE_Rab_Encoder;
 
+  static std::shared_ptr<WPI_VictorSPX> VIC_775_Rab;
+
   static std::shared_ptr<frc::Joystick> joystick;
 
   static double spd;
-  static double pre;
-
+  static double curPos;
  public:
   CargoIntake();
   void InitDefaultCommand() override;
   void Periodic() override;
+
+  void servorMode();
 };

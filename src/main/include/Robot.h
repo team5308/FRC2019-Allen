@@ -14,6 +14,7 @@
 #include "OI.h"
 #include "subsystems/CargoIntake.h"
 #include "RevDigit.h"
+#include <rev/CANSparkMax.h>
 
 
 class Robot : public frc::TimedRobot {

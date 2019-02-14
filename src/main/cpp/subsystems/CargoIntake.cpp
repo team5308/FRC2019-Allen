@@ -10,14 +10,24 @@
 
 std::shared_ptr<rev::CANSparkMax> CargoIntake::CSM_NEO_Rab;
 std::shared_ptr<frc::Joystick> CargoIntake::joystick;
-double CargoIntake::spd = 0.1;
-double CargoIntake::pre;
+std::shared_ptr<rev::CANEncoder> CargoIntake::CE_Rab_Encoder;
+std::shared_ptr<WPI_VictorSPX> CargoIntake::VIC_775_Rab;
+
+double CargoIntake::spd = 0.8;
+double CargoIntake::curPos = 0;
 
 CargoIntake::CargoIntake() : Subsystem("CargoIntake") {
 
-  CSM_NEO_Rab.reset(new rev::CANSparkMax(5, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+  CSM_NEO_Rab.reset(new rev::CANSparkMax(1, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+  CSM_NEO_Rab->SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+
+  CE_Rab_Encoder.reset(new rev::CANEncoder(*CSM_NEO_Rab));
+
+  VIC_775_Rab.reset(new WPI_VictorSPX(22));
 
   joystick.reset(new frc::Joystick(0));
+
+  curPos = CE_Rab_Encoder->GetPosition();
 
 }
 
@@ -25,11 +35,6 @@ void CargoIntake::InitDefaultCommand() {
 }
 
 void CargoIntake::Periodic() {
-
-  spd = joystick->GetThrottle();
-  spd = (int) (spd * 10) * 0.05;
-
-  printf("%.2f\n", spd);
 
   if(joystick->GetRawButton(11))
   {
@@ -51,5 +56,18 @@ void CargoIntake::Periodic() {
     RevDigit::GetInstance()->Display("5308");
   }
 
-  
+  double inSpd = joystick->GetThrottle();
+
+   if(joystick->GetRawButton(1))
+  {
+    VIC_775_Rab->Set(inSpd);
+    printf("Get!\n");
+  }
+  else
+  {
+    VIC_775_Rab->Set(0);
+  }
+
+
+  printf("%.2f\n", CE_Rab_Encoder->GetPosition());
 }

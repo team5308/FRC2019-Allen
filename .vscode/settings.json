@@ -68,6 +68,8 @@
     "istream": "cpp",
     "ostream": "cpp",
     "sstream": "cpp",
-    "streambuf": "cpp"
-  }
+    "streambuf": "cpp",
+    "*.inc": "cpp"
+  },
+  "C_Cpp.intelliSenseEngineFallback": "Disabled"
 }
