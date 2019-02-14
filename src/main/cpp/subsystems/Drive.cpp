@@ -33,8 +33,8 @@ Drive::Drive() : Subsystem("ExampleSubsystem") {
   CSM_CIM_RIGHT.reset(new rev::CANSparkMax(4,rev::CANSparkMax::MotorType::kBrushed));
   TAL_CIM_RIGHT.reset(new WPI_TalonSRX(21)); 
 
-  SCG_LEFT = std::make_shared<frc::SpeedControllerGroup>(*CSM_NEO_LEFT,*CSM_CIM_LEFT,*TAL_CIM_LEFT);
-  SCG_RIGHT = std::make_shared<frc::SpeedControllerGroup>(*CSM_NEO_RIGHT,*CSM_CIM_RIGHT,*TAL_CIM_RIGHT);
+  SCG_LEFT = std::make_shared<frc::SpeedControllerGroup>(*CSM_CIM_LEFT,*TAL_CIM_LEFT);
+  SCG_RIGHT = std::make_shared<frc::SpeedControllerGroup>(*CSM_CIM_RIGHT,*TAL_CIM_RIGHT);
 
   DIFF.reset(new frc::DifferentialDrive(*SCG_LEFT,*SCG_RIGHT));
 }
