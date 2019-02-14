@@ -13,7 +13,10 @@
 
 #include "OI.h"
 #include "subsystems/CargoIntake.h"
+#include "subsystems/Drive.h"
+
 #include "RevDigit.h"
+
 #include <rev/CANSparkMax.h>
 
 
@@ -22,6 +25,7 @@ class Robot : public frc::TimedRobot {
   static RevDigit m_revDigit;
   static OI m_oi;
   static CargoIntake cargoIntake;
+  static Drive drive;
 
   void RobotInit() override;
   void RobotPeriodic() override;
