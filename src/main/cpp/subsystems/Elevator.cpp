@@ -11,6 +11,9 @@ std::shared_ptr<rev::CANSparkMax> Elevator::CSM_NEO_0;
 std::shared_ptr<rev::CANSparkMax> Elevator::CSM_NEO_1;
 std::shared_ptr<rev::CANSparkMax> Elevator::CSM_RED;
 
+std::shared_ptr<rev::CANEncoder> Elevator::CE_1;
+std::shared_ptr<rev::CANEncoder> Elevator::CE_2;
+
 std::shared_ptr<frc::SpeedControllerGroup> Elevator::SCG_main;
 
 Elevator::Elevator() : Subsystem("ExampleSubsystem") {
@@ -20,6 +23,9 @@ Elevator::Elevator() : Subsystem("ExampleSubsystem") {
 
   CSM_NEO_0->SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
   CSM_NEO_1->SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+
+  CE_1.reset(new rev::CANEncoder(*CSM_NEO_0));
+  CE_2.reset(new rev::CANEncoder(*CSM_RED));
 
   SCG_main = std::make_shared<frc::SpeedControllerGroup>(*CSM_NEO_0,*CSM_NEO_1);
 }

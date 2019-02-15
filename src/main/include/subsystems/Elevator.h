@@ -24,5 +24,8 @@ class Elevator : public frc::Subsystem {
   static std::shared_ptr<rev::CANSparkMax> CSM_NEO_1;
   static std::shared_ptr<rev::CANSparkMax> CSM_RED;
 
+  static std::shared_ptr<rev::CANEncoder> CE_1;
+  static std::shared_ptr<rev::CANEncoder> CE_2;
+
   static std::shared_ptr<frc::SpeedControllerGroup> SCG_main;
 };
