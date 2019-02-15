@@ -15,6 +15,7 @@
 #include "subsystems/CargoIntake.h"
 #include "subsystems/Drive.h"
 #include "subsystems/Pneumatics.h"
+#include "subsystems/Elevator.h"
 
 #include "RevDigit.h"
 
@@ -28,6 +29,7 @@ class Robot : public frc::TimedRobot {
   static CargoIntake cargoIntake;
   static Drive drive;
   static Pneumatics pneumatics;
+  static Elevator elevator;
 
   void RobotInit() override;
   void RobotPeriodic() override;
