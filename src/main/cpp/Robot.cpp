@@ -12,6 +12,8 @@
 RevDigit Robot::m_revDigit;
 OI Robot::m_oi;
 CargoIntake Robot::cargoIntake;
+Drive Robot::drive;
+Pneumatics Robot::pneumatics;
 
 void Robot::RobotInit() {
 }
@@ -24,7 +26,16 @@ void Robot::RobotInit() {
  * <p> This runs after the mode specific periodic functions, but before
  * LiveWindow and SmartDashboard integrated updating.
  */
-void Robot::RobotPeriodic() {}
+void Robot::RobotPeriodic() {
+  if(m_revDigit.GetA())
+  {
+    Pneumatics::compressor->Start();
+  }
+  else if(m_revDigit.GetB())
+  {
+    Pneumatics::compressor->Stop();
+  }
+}
 
 /**
  * This function is called once each time the robot enters Disabled mode. You
@@ -36,7 +47,7 @@ void Robot::DisabledInit() {
 }
 
 void Robot::DisabledPeriodic() {
-  m_revDigit.Display("SHUT");
+  // m_revDigit.Display("SHUT");
   frc::Scheduler::GetInstance()->Run(); 
   }
 

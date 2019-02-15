@@ -14,6 +14,7 @@
 #include "OI.h"
 #include "subsystems/CargoIntake.h"
 #include "subsystems/Drive.h"
+#include "subsystems/Pneumatics.h"
 
 #include "RevDigit.h"
 
@@ -26,6 +27,7 @@ class Robot : public frc::TimedRobot {
   static OI m_oi;
   static CargoIntake cargoIntake;
   static Drive drive;
+  static Pneumatics pneumatics;
 
   void RobotInit() override;
   void RobotPeriodic() override;

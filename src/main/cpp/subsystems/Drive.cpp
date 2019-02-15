@@ -22,19 +22,31 @@ std::shared_ptr<frc::SpeedControllerGroup> Drive::SCG_RIGHT;
 
 std::shared_ptr<frc::DifferentialDrive> Drive::DIFF;
 
-Drive::Drive() : Subsystem("ExampleSubsystem") {
-  JOY.reset(new frc::Joystick(1));
+Drive::Drive() : Subsystem("Drive") {
+  JOY.reset(new frc::Joystick(0));
 
   CSM_NEO_LEFT.reset(new rev::CANSparkMax(6,rev::CANSparkMax::MotorType::kBrushless));
   CSM_CIM_LEFT.reset(new rev::CANSparkMax(7,rev::CANSparkMax::MotorType::kBrushed));
   TAL_CIM_LEFT.reset(new WPI_TalonSRX(21));
+  CSM_CIM_LEFT->SetInverted(true);
+
+  CSM_NEO_LEFT->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  CSM_CIM_LEFT->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
 
   CSM_NEO_RIGHT.reset(new rev::CANSparkMax(4,rev::CANSparkMax::MotorType::kBrushless));
   CSM_CIM_RIGHT.reset(new rev::CANSparkMax(5,rev::CANSparkMax::MotorType::kBrushed));
-  TAL_CIM_RIGHT.reset(new WPI_TalonSRX(25)); 
+  TAL_CIM_RIGHT.reset(new WPI_TalonSRX(25));
+  CSM_CIM_RIGHT->SetInverted(true);
 
-  SCG_LEFT = std::make_shared<frc::SpeedControllerGroup>(*CSM_CIM_LEFT,*TAL_CIM_LEFT);
-  SCG_RIGHT = std::make_shared<frc::SpeedControllerGroup>(*CSM_CIM_RIGHT,*TAL_CIM_RIGHT);
+  CSM_NEO_RIGHT->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  CSM_CIM_RIGHT->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+
+  SCG_LEFT = std::make_shared<frc::SpeedControllerGroup>(*CSM_NEO_LEFT, *CSM_CIM_LEFT,*TAL_CIM_LEFT);
+  SCG_RIGHT = std::make_shared<frc::SpeedControllerGroup>(*CSM_NEO_RIGHT, *CSM_CIM_RIGHT,*TAL_CIM_RIGHT);
+
+  
+  // SCG_LEFT->SetInverted(true);
+  // SCG_RIGHT->SetInverted(true);
 
   DIFF.reset(new frc::DifferentialDrive(*SCG_LEFT,*SCG_RIGHT));
 }
@@ -56,7 +68,7 @@ inline double abs(double x){
 }
 
 double suoqu(double x){
-  if(x < 0.14){
+  if(abs(x) < 0.14){
     return 0.0;
   }else{
     return x;
@@ -64,5 +76,20 @@ double suoqu(double x){
 }
 
 void Drive::Periodic(){
-  DIFF -> ArcadeDrive(suoqu(JOY -> GetY()), suoqu(JOY -> GetX()));
+  
+  // SCG_LEFT->Set(-0.2);
+  // SCG_RIGHT->Set(-0.2);
+  if(JOY->GetRawButtonPressed(2))
+  {
+    Pneumatics::drive_Mode0->Set(!Pneumatics::drive_Mode0->Get());
+    if(Pneumatics:: drive_Mode0->Get())
+    {
+      printf("True\n");
+    }
+    else
+    {
+      printf("Flase\n");
+    }
+  }
+  DIFF -> ArcadeDrive(-suoqu(JOY -> GetY()), suoqu(JOY -> GetX()));
 }

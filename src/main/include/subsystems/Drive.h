@@ -12,6 +12,8 @@
 #include <ctre/Phoenix.h>
 #include "rev/CANSparkMax.h"
 
+#include "Pneumatics.h"
+
 class Drive : public frc::Subsystem {
  private:
   // It's desirable that everything possible under private except
@@ -37,4 +39,5 @@ class Drive : public frc::Subsystem {
 
   static std::shared_ptr<frc::DifferentialDrive> DIFF;
 
+  
 };

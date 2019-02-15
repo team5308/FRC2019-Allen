@@ -13,7 +13,7 @@ std::shared_ptr<frc::Joystick> CargoIntake::joystick;
 std::shared_ptr<rev::CANEncoder> CargoIntake::CE_Rab_Encoder;
 std::shared_ptr<WPI_VictorSPX> CargoIntake::VIC_775_Rab;
 
-double CargoIntake::spd = 0.8;
+double CargoIntake::spd = 0.2;
 double CargoIntake::curPos = 0;
 
 CargoIntake::CargoIntake() : Subsystem("CargoIntake") {
@@ -69,5 +69,5 @@ void CargoIntake::Periodic() {
   }
 
 
-  printf("%.2f\n", CE_Rab_Encoder->GetPosition());
+  // printf("%.2f\n", CE_Rab_Encoder->GetPosition());
 }
