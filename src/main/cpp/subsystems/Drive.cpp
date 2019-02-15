@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
+/* Copyright (c) 2017-2018 FIRST. All rights Reserved.                        */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
@@ -9,46 +9,52 @@
 
 std::shared_ptr<frc::Joystick> Drive::JOY;
 
-std::shared_ptr<rev::CANSparkMax> Drive::CSM_NEO_LEFT;
-std::shared_ptr<rev::CANSparkMax> Drive::CSM_CIM_LEFT;
-std::shared_ptr<WPI_TalonSRX>     Drive::TAL_CIM_LEFT;
+std::shared_ptr<rev::CANSparkMax> Drive::CSM_NEO_left;
+std::shared_ptr<rev::CANSparkMax> Drive::CSM_CIM_left;
+std::shared_ptr<WPI_TalonSRX>     Drive::TAL_CIM_left;
 
-std::shared_ptr<rev::CANSparkMax> Drive::CSM_NEO_RIGHT;
-std::shared_ptr<rev::CANSparkMax> Drive::CSM_CIM_RIGHT;
-std::shared_ptr<WPI_TalonSRX>     Drive::TAL_CIM_RIGHT;
+std::shared_ptr<rev::CANSparkMax> Drive::CSM_NEO_right;
+std::shared_ptr<rev::CANSparkMax> Drive::CSM_CIM_right;
+std::shared_ptr<WPI_TalonSRX>     Drive::TAL_CIM_right;
 
-std::shared_ptr<frc::SpeedControllerGroup> Drive::SCG_LEFT;
-std::shared_ptr<frc::SpeedControllerGroup> Drive::SCG_RIGHT;
+std::shared_ptr<rev::CANEncoder> Drive::CE_left;
+std::shared_ptr<rev::CANEncoder> Drive::CE_right;
+
+std::shared_ptr<frc::SpeedControllerGroup> Drive::SCG_left;
+std::shared_ptr<frc::SpeedControllerGroup> Drive::SCG_right;
 
 std::shared_ptr<frc::DifferentialDrive> Drive::DIFF;
 
 Drive::Drive() : Subsystem("Drive") {
   JOY.reset(new frc::Joystick(0));
 
-  CSM_NEO_LEFT.reset(new rev::CANSparkMax(6,rev::CANSparkMax::MotorType::kBrushless));
-  CSM_CIM_LEFT.reset(new rev::CANSparkMax(7,rev::CANSparkMax::MotorType::kBrushed));
-  TAL_CIM_LEFT.reset(new WPI_TalonSRX(21));
-  CSM_CIM_LEFT->SetInverted(true);
+  CSM_NEO_left.reset(new rev::CANSparkMax(6,rev::CANSparkMax::MotorType::kBrushless));
+  CSM_CIM_left.reset(new rev::CANSparkMax(7,rev::CANSparkMax::MotorType::kBrushed));
+  TAL_CIM_left.reset(new WPI_TalonSRX(21));
+  CSM_CIM_left->SetInverted(true);
 
-  CSM_NEO_LEFT->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
-  CSM_CIM_LEFT->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  CSM_NEO_left->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  CSM_CIM_left->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
 
-  CSM_NEO_RIGHT.reset(new rev::CANSparkMax(4,rev::CANSparkMax::MotorType::kBrushless));
-  CSM_CIM_RIGHT.reset(new rev::CANSparkMax(5,rev::CANSparkMax::MotorType::kBrushed));
-  TAL_CIM_RIGHT.reset(new WPI_TalonSRX(25));
-  CSM_CIM_RIGHT->SetInverted(true);
+  CSM_NEO_right.reset(new rev::CANSparkMax(4,rev::CANSparkMax::MotorType::kBrushless));
+  CSM_CIM_right.reset(new rev::CANSparkMax(5,rev::CANSparkMax::MotorType::kBrushed));
+  TAL_CIM_right.reset(new WPI_TalonSRX(25));
+  CSM_CIM_right->SetInverted(true);
 
-  CSM_NEO_RIGHT->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
-  CSM_CIM_RIGHT->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  CSM_NEO_right->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  CSM_CIM_right->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
 
-  SCG_LEFT = std::make_shared<frc::SpeedControllerGroup>(*CSM_NEO_LEFT, *CSM_CIM_LEFT,*TAL_CIM_LEFT);
-  SCG_RIGHT = std::make_shared<frc::SpeedControllerGroup>(*CSM_NEO_RIGHT, *CSM_CIM_RIGHT,*TAL_CIM_RIGHT);
+  CE_left.reset(new rev::CANEncoder(*CSM_NEO_left));
+  CE_right.reset(new rev::CANEncoder(*CSM_NEO_right));
+
+  SCG_left = std::make_shared<frc::SpeedControllerGroup>(*CSM_NEO_left, *CSM_CIM_left,*TAL_CIM_left);
+  SCG_right = std::make_shared<frc::SpeedControllerGroup>(*CSM_NEO_right, *CSM_CIM_right,*TAL_CIM_right);
 
   
-  // SCG_LEFT->SetInverted(true);
-  // SCG_RIGHT->SetInverted(true);
+  // SCG_left->SetInverted(true);
+  // SCG_right->SetInverted(true);
 
-  DIFF.reset(new frc::DifferentialDrive(*SCG_LEFT,*SCG_RIGHT));
+  DIFF.reset(new frc::DifferentialDrive(*SCG_left,*SCG_right));
 }
 
 void Drive::InitDefaultCommand() {
@@ -77,8 +83,8 @@ double suoqu(double x){
 
 void Drive::Periodic(){
   
-  // SCG_LEFT->Set(-0.2);
-  // SCG_RIGHT->Set(-0.2);
+  // SCG_left->Set(-0.2);
+  // SCG_right->Set(-0.2);
   if(JOY->GetRawButtonPressed(2))
   {
     Pneumatics::drive_Mode0->Set(!Pneumatics::drive_Mode0->Get());
@@ -91,5 +97,6 @@ void Drive::Periodic(){
       printf("Flase\n");
     }
   }
+  printf("left: %.2f   right: %.2f\n", CE_left->GetPosition(), CE_right->GetPosition());
   DIFF -> ArcadeDrive(-suoqu(JOY -> GetY()), suoqu(JOY -> GetX()));
 }
