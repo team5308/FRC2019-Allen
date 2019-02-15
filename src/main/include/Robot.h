@@ -16,6 +16,7 @@
 #include "subsystems/Drive.h"
 #include "subsystems/Pneumatics.h"
 #include "subsystems/Elevator.h"
+#include "subsystems/Rabbit.h"
 
 #include "RevDigit.h"
 
@@ -30,6 +31,7 @@ class Robot : public frc::TimedRobot {
   static Drive drive;
   static Pneumatics pneumatics;
   static Elevator elevator;
+  static Rabbit rabbit;
 
   void RobotInit() override;
   void RobotPeriodic() override;
