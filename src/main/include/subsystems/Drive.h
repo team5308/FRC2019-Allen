@@ -11,6 +11,12 @@
 #include <frc/WPILib.h>
 #include <ctre/Phoenix.h>
 #include "rev/CANSparkMax.h"
+#include "BasicPID.h"
+// #include "DriveInfo.h"
+#include "networktables/NetworkTable.h"
+#include "networktables/NetworkTableInstance.h"
+
+#include "ytz5308/SparkMaxEncoder.h"
 
 #include "Pneumatics.h"
 
@@ -18,9 +24,12 @@ class Drive : public frc::Subsystem {
  private:
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
-
+  BasicPID drivePID;
+  BasicPID rightPID;
  public:
   Drive();
+  double driveSpeed;
+  int index;
   void InitDefaultCommand() override; 
   void Periodic() override;
 
@@ -34,7 +43,7 @@ class Drive : public frc::Subsystem {
   static std::shared_ptr<rev::CANSparkMax> CSM_CIM_right;
   static std::shared_ptr<WPI_TalonSRX>     TAL_CIM_right;
 
-  static std::shared_ptr<rev::CANEncoder> CE_left;
+  static std::shared_ptr<ytz5308::SparkMaxEncoder> CE_left;
   static std::shared_ptr<rev::CANEncoder> CE_right;
 
   static std::shared_ptr<frc::SpeedControllerGroup> SCG_left;
@@ -42,5 +51,7 @@ class Drive : public frc::Subsystem {
 
   static std::shared_ptr<frc::DifferentialDrive> DIFF;
 
-  
+  static std::shared_ptr<NetworkTable> limelight;
+
+  double tx,ty;
 };

@@ -17,13 +17,15 @@ std::shared_ptr<rev::CANSparkMax> Drive::CSM_NEO_right;
 std::shared_ptr<rev::CANSparkMax> Drive::CSM_CIM_right;
 std::shared_ptr<WPI_TalonSRX>     Drive::TAL_CIM_right;
 
-std::shared_ptr<rev::CANEncoder> Drive::CE_left;
+std::shared_ptr<ytz5308::SparkMaxEncoder> Drive::CE_left;
 std::shared_ptr<rev::CANEncoder> Drive::CE_right;
 
 std::shared_ptr<frc::SpeedControllerGroup> Drive::SCG_left;
 std::shared_ptr<frc::SpeedControllerGroup> Drive::SCG_right;
 
 std::shared_ptr<frc::DifferentialDrive> Drive::DIFF;
+
+std::shared_ptr<NetworkTable> Drive::limelight = nt::NetworkTableInstance::GetDefault().GetTable("limeliht");
 
 Drive::Drive() : Subsystem("Drive") {
   JOY.reset(new frc::Joystick(0));
@@ -44,13 +46,14 @@ Drive::Drive() : Subsystem("Drive") {
   CSM_NEO_right->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
   CSM_CIM_right->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
 
-  CE_left.reset(new rev::CANEncoder(*CSM_NEO_left));
+  CE_left.reset(new ytz5308::SparkMaxEncoder(*CSM_NEO_left));
   CE_right.reset(new rev::CANEncoder(*CSM_NEO_right));
 
   SCG_left = std::make_shared<frc::SpeedControllerGroup>(*CSM_NEO_left, *CSM_CIM_left,*TAL_CIM_left);
   SCG_right = std::make_shared<frc::SpeedControllerGroup>(*CSM_NEO_right, *CSM_CIM_right,*TAL_CIM_right);
 
-  
+  drivePID.setPara(0.00018, 0, 0);
+  rightPID.setPara(0.00018, 0, 0);
   // SCG_left->SetInverted(true);
   // SCG_right->SetInverted(true);
 
@@ -85,6 +88,8 @@ void Drive::Periodic(){
   
   // SCG_left->Set(-0.2);
   // SCG_right->Set(-0.2);
+  tx = limelight->GetNumber("tx", 0.0);
+  ty = limelight->GetNumber("ty", 0.0);
   if(JOY->GetRawButtonPressed(2))
   {
     Pneumatics::drive_Mode0->Set(!Pneumatics::drive_Mode0->Get());
@@ -97,6 +102,27 @@ void Drive::Periodic(){
       printf("Flase\n");
     }
   }
-  printf("left: %.2f   right: %.2f\n", CE_left->GetPosition(), CE_right->GetPosition());
-  DIFF -> ArcadeDrive(-suoqu(JOY -> GetY()), suoqu(JOY -> GetX()));
+  if(JOY->GetRawButton(3))
+  {
+    SCG_left->Set(0.5);
+    SCG_right->Set(0.5);
+  }
+  else
+  {
+    DIFF->ArcadeDrive(suoqu(-JOY->GetY()), suoqu(JOY->GetX()));
+  }
+  
+  // printf("left: %.2f   right: %.2f\n", CE_left->GetPosition(), CE_right->GetPosition());
+  printf("leftV: %.2f   rightV:%.2f\n", CE_left->GetVelocity(), CE_right->GetVelocity());
+  printf("tx: %f, ty: %f\n", tx, ty);
+  //DIFF -> ArcadeDrive(-suoqu(JOY -> GetY()), suoqu(JOY -> GetX()));
+  // SCG_left->Set(1.0);
+  // SCG_right->Set(1.0);
+  double vs = CE_left->GetVelocity();
+  double rs = CE_right->GetVelocity();
+  
+  printf("leftV: %.2f\n",vs);
+  driveSpeed = - ((int) (JOY -> GetY() * 10) * 0.1);
+
+  
 }
