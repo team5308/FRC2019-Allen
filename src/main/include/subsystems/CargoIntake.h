@@ -27,10 +27,9 @@ class CargoIntake : public frc::Subsystem {
 
   static double spd;
   static double curPos;
+  static double cargoSpeed;
  public:
   CargoIntake();
   void InitDefaultCommand() override;
   void Periodic() override;
-
-  void servorMode();
 };

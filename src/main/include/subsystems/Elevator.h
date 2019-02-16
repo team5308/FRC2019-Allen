@@ -19,6 +19,9 @@ class Elevator : public frc::Subsystem {
  public:
   Elevator();
   void InitDefaultCommand() override;
+  void Periodic();
+
+  static std::shared_ptr<frc::Joystick> JOY_ele;
 
   static std::shared_ptr<rev::CANSparkMax> CSM_NEO_0;
   static std::shared_ptr<rev::CANSparkMax> CSM_NEO_1;
