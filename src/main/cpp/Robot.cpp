@@ -14,6 +14,7 @@ OI Robot::m_oi;
 CargoIntake Robot::cargoIntake;
 Drive Robot::drive;
 Pneumatics Robot::pneumatics;
+testor Robot::Testor;
 
 void Robot::RobotInit() {
 }
@@ -27,6 +28,9 @@ void Robot::RobotInit() {
  * LiveWindow and SmartDashboard integrated updating.
  */
 void Robot::RobotPeriodic() {
+  
+  m_oi.blink->Set(-0.21);
+
   if(m_revDigit.GetA())
   {
     Pneumatics::compressor->Start();
@@ -89,7 +93,9 @@ void Robot::TeleopInit() {
 
 void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
-void Robot::TestPeriodic() {}
+void Robot::TestPeriodic() {
+  Testor.test_default();
+}
 
 #ifndef RUNNING_FRC_TESTS
 int main() { return frc::StartRobot<Robot>(); }

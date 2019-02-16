@@ -26,6 +26,10 @@ class Drive : public frc::Subsystem {
   // for methods that implement subsystem capabilities
   BasicPID drivePID;
   BasicPID rightPID;
+
+  static constexpr double highModek = 6 * 3.1415926 * 2.54 /
+   7.16;
+  void forward(double);
  public:
   Drive();
   double driveSpeed;
@@ -33,6 +37,9 @@ class Drive : public frc::Subsystem {
   void InitDefaultCommand() override; 
   void Periodic() override;
 
+  double tarPos;
+  bool autoMode;
+ 
   static std::shared_ptr<frc::Joystick> JOY;
 
   static std::shared_ptr<rev::CANSparkMax> CSM_NEO_left;
@@ -54,4 +61,8 @@ class Drive : public frc::Subsystem {
   static std::shared_ptr<NetworkTable> limelight;
 
   double tx,ty;
+
+  double kDiffRate;
+
+  void autoTest();
 };

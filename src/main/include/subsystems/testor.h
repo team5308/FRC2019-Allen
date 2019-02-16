@@ -7,10 +7,17 @@
 
 #pragma once
 
-#include <frc/Spark.h>
+#include <frc/commands/Subsystem.h>
+#include <rev/CANSparkMax.h>
+#include <rev/CANEncoder.h>
 
-class OI {
+class testor : public frc::Subsystem {
+ private:
+ static std::shared_ptr<rev::CANSparkMax> CSM_NEO_test;
+ static std::shared_ptr<rev::CANEncoder> CE_NEO_test;
+
  public:
-  std::shared_ptr<frc::Spark> blink;
-  OI();
+  testor();
+  void InitDefaultCommand() override;
+  void test_default();
 };

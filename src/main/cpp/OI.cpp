@@ -10,5 +10,5 @@
 #include <frc/WPILib.h>
 
 OI::OI() {
-  // Process operator interface input here.
+  blink.reset(new frc::Spark(2));
 }
