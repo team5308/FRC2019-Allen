@@ -11,17 +11,17 @@
 
 RevDigit Robot::m_revDigit;
 OI Robot::m_oi;
-CargoIntake Robot::cargoIntake;
-Drive Robot::drive;
-Pneumatics Robot::pneumatics;
-Elevator Robot::elevator;
-Rabbit Robot::rabbit;
+// CargoIntake Robot::cargoIntake;
+// Drive Robot::drive;
+// Pneumatics Robot::pneumatics;
+// Elevator Robot::elevator;
+// Rabbit Robot::rabbit;
 
-testor Robot::Testor;
+// testor Robot::Testor;
 
 void Robot::RobotInit() {
 
-  CargoIntake::CSM_NEO_Rab->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  // CargoIntake::CSM_NEO_Rab->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
 }
 
 /**
@@ -34,16 +34,16 @@ void Robot::RobotInit() {
  */
 void Robot::RobotPeriodic() {
   
-  m_oi.blink->Set(-0.21);
+  // m_oi.blink->Set(-0.21);
 
-  if(m_revDigit.GetA())
-  {
-    Pneumatics::compressor->Start();
-  }
-  else if(m_revDigit.GetB())
-  {
-    Pneumatics::compressor->Stop();
-  }
+  // if(m_revDigit.GetA())
+  // {
+  //   Pneumatics::compressor->Start();
+  // }
+  // else if(m_revDigit.GetB())
+  // {
+  //   Pneumatics::compressor->Stop();
+  // }
 }
 
 /**
@@ -52,7 +52,7 @@ void Robot::RobotPeriodic() {
  * robot is disabled.
  */
 void Robot::DisabledInit() {
-  CargoIntake::CSM_NEO_Rab->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  // CargoIntake::CSM_NEO_Rab->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
 }
 
 void Robot::DisabledPeriodic() {
@@ -93,13 +93,13 @@ void Robot::TeleopInit() {
   // This makes sure that the autonomous stops running when
   // teleop starts running. If you want the autonomous to
   // continue until interrupted by another command, remove
-   CargoIntake::CSM_NEO_Rab->SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  //  CargoIntake::CSM_NEO_Rab->SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
 }
 
 void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
 void Robot::TestPeriodic() {
-  Testor.test_default();
+  // Testor.test_default();
 }
 
 #ifndef RUNNING_FRC_TESTS

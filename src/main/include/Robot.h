@@ -28,12 +28,12 @@ class Robot : public frc::TimedRobot {
  public:
   static RevDigit m_revDigit;
   static OI m_oi;
-  static CargoIntake cargoIntake;
-  static Drive drive;
-  static Pneumatics pneumatics;
-  static Elevator elevator;
-  static Rabbit rabbit;
-  static testor Testor;
+//   static CargoIntake cargoIntake;
+//   static Drive drive;
+//   static Pneumatics pneumatics;
+//   static Elevator elevator;
+//   static Rabbit rabbit;
+//   static testor Testor;
 
   void RobotInit() override;
   void RobotPeriodic() override;
