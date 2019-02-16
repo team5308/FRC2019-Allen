@@ -20,6 +20,22 @@
 
 #include "Pneumatics.h"
 
+inline double abs(double x){
+  if(x < 0){
+    return -x;
+  }else{
+    return x;
+  }
+}
+
+inline double suoqu(double x){
+  if(abs(x) < 0.14){
+    return 0.0;
+  }else{
+    return x;
+  }
+}
+
 class Drive : public frc::Subsystem {
  private:
   // It's desirable that everything possible under private except
@@ -37,10 +53,7 @@ class Drive : public frc::Subsystem {
   void InitDefaultCommand() override; 
   void Periodic() override;
 
-  double tarPos;
-  bool autoMode;
- 
-  static std::shared_ptr<frc::Joystick> JOY;
+  static std::shared_ptr<frc::Joystick> joystick;
 
   static std::shared_ptr<rev::CANSparkMax> CSM_NEO_left;
   static std::shared_ptr<rev::CANSparkMax> CSM_CIM_left;

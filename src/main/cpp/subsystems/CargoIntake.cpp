@@ -15,6 +15,7 @@ std::shared_ptr<WPI_VictorSPX> CargoIntake::VIC_775_Rab;
 
 double CargoIntake::spd = 0.4;
 double CargoIntake::curPos = 0;
+double CargoIntake::cargoSpeed = 0;
 
 CargoIntake::CargoIntake() : Subsystem("CargoIntake") {
 
@@ -39,35 +40,27 @@ void CargoIntake::Periodic() {
   if(joystick->GetRawButton(11))
   {
     CSM_NEO_Rab->Set(spd);
-
-    printf("Get!\n");
-
     RevDigit::GetInstance()->Display("0501");
   }
   else if(joystick->GetRawButton(12))
   {
     CSM_NEO_Rab->Set(-spd);
-    printf("Not Get!\n");
     RevDigit::GetInstance()->Display("0500");
   }
   else
   {
     CSM_NEO_Rab->Set(0);
-    RevDigit::GetInstance()->Display("5308");
   }
 
-  double inSpd = joystick->GetThrottle();
+  cargoSpeed = joystick->GetThrottle();
 
    if(joystick->GetRawButton(1))
   {
-    VIC_775_Rab->Set(inSpd);
-    printf("Get!\n");
+    VIC_775_Rab->Set(cargoSpeed);
   }
   else
   {
     VIC_775_Rab->Set(0);
   }
-
-
   // printf("%.2f\n", CE_Rab_Encoder->GetPosition());
 }

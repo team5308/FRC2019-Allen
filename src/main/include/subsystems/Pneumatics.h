@@ -13,6 +13,7 @@
 class Pneumatics : public frc::Subsystem {
  public:
   static std::shared_ptr<frc::Compressor> compressor;
+  
   static std::shared_ptr<frc::Solenoid> drive_Mode0; 
 
  

@@ -11,8 +11,10 @@ std::shared_ptr<frc::Compressor> Pneumatics::compressor;
 std::shared_ptr<frc::Solenoid> Pneumatics::drive_Mode0;
 
 Pneumatics::Pneumatics() : Subsystem("Pneumatics") {
+  
   compressor.reset(new frc::Compressor(11));
   drive_Mode0.reset(new frc::Solenoid(11, 0));
+
   drive_Mode0->Set(true);
 }
 

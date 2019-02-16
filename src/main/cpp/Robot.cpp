@@ -14,9 +14,14 @@ OI Robot::m_oi;
 CargoIntake Robot::cargoIntake;
 Drive Robot::drive;
 Pneumatics Robot::pneumatics;
+Elevator Robot::elevator;
+Rabbit Robot::rabbit;
+
 testor Robot::Testor;
 
 void Robot::RobotInit() {
+
+  CargoIntake::CSM_NEO_Rab->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
 }
 
 /**

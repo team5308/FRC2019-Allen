@@ -22,6 +22,8 @@ class Rabbit : public frc::Subsystem {
   // for methods that implement subsystem capabilities
 
   /*Rabit: */
+  static std::shared_ptr<frc::Joystick> JOY_rab;
+
   static std::shared_ptr<WPI_TalonSRX> TAL_rab;
   static std::shared_ptr<rev::CANSparkMax> CSM_rab;
   
@@ -37,4 +39,5 @@ class Rabbit : public frc::Subsystem {
  public:
   Rabbit();
   void InitDefaultCommand() override;
+  void Periodic() override;
 };
