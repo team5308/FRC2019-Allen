@@ -1,6 +1,6 @@
 /*----------------------------------------------------------------------------*/
 /* Copyright (c) 2019-2020 FRC Team 5308. All Rights Reserved.                */
-/* Author: Cetian Liu                                                          */                                                  */
+/* Author: Cetian Liu                                                          */               
 /* Filename: SparkMaxEncoder.cpp                                               */
 /* Project: Allen-Test-V2                                                    */
 /*----------------------------------------------------------------------------*/

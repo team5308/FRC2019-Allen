@@ -1,8 +1,8 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2019-2020 FRC Team 5308. All Rights Reserved.                */
-/* Author: Cetian Liu                                                          */                                                  */
-/* Filename: Robot.cpp                                               */
-/* Project: Allen-Test-V2                                                    */
+/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
 #include "Robot.h"
@@ -13,19 +13,22 @@ RevDigit Robot::m_revDigit;
 OI Robot::m_oi;
 
 Pneumatics Robot::pneumatics;
-
 CargoIntake Robot::cargoIntake;
 Drive Robot::drive;
 Elevator Robot::elevator;
 Rabbit Robot::rabbit;
 
-// testor Robot::Testor;
+testor Robot::Testor;
+
+frc::Joystick Robot::pilot(0);
 
 void Robot::RobotInit() {
 
   CargoIntake::CSM_NEO_Rab->SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
   // Testor.test_default();
   frc::CameraServer::GetInstance()->StartAutomaticCapture("cam", 0);
+
+  Pneumatics::compressor->Stop();
 }
 
 /**
@@ -40,7 +43,7 @@ void Robot::RobotPeriodic() {
   
   // m_oi.blink->Set(-0.21);
 
-  if(m_revDigit.GetA())
+  if(m_revDigit.GetA() || pilot.GetRawButtonPressed(9))
   {
     Pneumatics::compressor->Stop();
     // Rabbit::SOL_deDick->Set(false);
@@ -49,7 +52,7 @@ void Robot::RobotPeriodic() {
   {
     Pneumatics::compressor->Start();
     // Rabbit::SOL_deDick->Set(true);
-  } 
+  }
 }
 
 /**

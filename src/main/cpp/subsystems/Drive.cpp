@@ -1,6 +1,6 @@
 /*----------------------------------------------------------------------------*/
 /* Copyright (c) 2019-2020 FRC Team 5308. All Rights Reserved.                */
-/* Author: Cetian Liu                                                          */                                                  */
+/* Author: Cetian Liu                                                          */                              
 /* Filename: Drive.cpp                                               */
 /* Project: Allen-Test-V2                                                    */
 /*----------------------------------------------------------------------------*/
@@ -25,7 +25,9 @@ std::shared_ptr<frc::SpeedControllerGroup> Drive::SCG_right;
 
 std::shared_ptr<frc::DifferentialDrive> Drive::DIFF;
 
-std::shared_ptr<NetworkTable> Drive::limelight = nt::NetworkTableInstance::GetDefault().GetTable("limeliht");
+std::shared_ptr<NetworkTable> Drive::limelight = nt::NetworkTableInstance::GetDefault().GetTable("limelight");
+
+bool Drive::autoMode = false;
 
 Drive::Drive() : Subsystem("Drive") {
   joystick.reset(new frc::Joystick(0));
@@ -57,12 +59,10 @@ Drive::Drive() : Subsystem("Drive") {
 
   SCG_left -> SetInverted(true);
   SCG_right -> SetInverted(true);
-
-  DIFF.reset(new frc::DifferentialDrive(*CSM_NEO_left,*CSM_NEO_right));
-
   kInverted = false;
 
-  // forPID.setP(0.02);
+  limelightPID.setPara(0.01,0.05,0);
+
 }
 
 void Drive::InitDefaultCommand() {
@@ -72,8 +72,31 @@ void Drive::InitDefaultCommand() {
 
 void Drive::Periodic(){
 
-  // tx = limelight->GetNumber("tx", 0.0);
-  // ty = limelight->GetNumber("ty", 0.0);
+
+  tx = limelight->GetNumber("tx", 0.0);
+  ty = limelight->GetNumber("ty", 0.0);
+  autoMode = true;
+
+  if(autoMode) 
+  {
+    printf("limelight: tx: %.2f\n", tx);
+    limelightPID.push(tx);
+    double limelightSpeed = limelightPID.outputValue;
+    if(joystick->GetRawButton(4))
+    {
+      SCG_left -> Set(-limelightSpeed);
+      SCG_right -> Set(-limelightSpeed);
+      return ;
+    }
+    else
+    {
+     SCG_left -> Set(0);
+      SCG_right -> Set(0);
+    }
+    
+    if (!autoMode) return ;
+  }
+
 
   kInverted = !(joystick->GetPOV()==0);
 
@@ -92,8 +115,12 @@ void Drive::Periodic(){
   {
     ArcadeDrive(joystick->GetY(),  - joystick->GetX(), true);
   }
+
+  #ifdef __DRIVE_OUT_PUT_Mode
   
   printf("left: %.2f   right: %.2f\n", CE_left->GetPosition(), CE_right->GetPosition());
+  
+  #endif
   // printf("leftV: %.2f   rightV:%.2f\n", CE_left->GetVelocity(), CE_right->GetVelocity());
   // printf("tx: %f, ty: %f\n", tx, ty);
 }

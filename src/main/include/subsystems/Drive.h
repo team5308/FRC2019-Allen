@@ -1,6 +1,6 @@
 /*----------------------------------------------------------------------------*/
 /* Copyright (c) 2019-2020 FRC Team 5308. All Rights Reserved.                */
-/* Author: Cetian Liu                                                          */                                                  */
+/* Author: Cetian Liu                                                          */     
 /* Filename: Drive.h                                               */
 /* Project: Allen-Test-V2                                                    */
 /*----------------------------------------------------------------------------*/
@@ -12,7 +12,7 @@
 #include <ctre/Phoenix.h>
 #include "rev/CANSparkMax.h"
 #include <rev/CANEncoder.h>
-#include "BasicPID.h"
+#include "../BasicPID.h"
 // #include "DriveInfo.h"
 #include "networktables/NetworkTable.h"
 #include "networktables/NetworkTableInstance.h"
@@ -84,6 +84,8 @@ class Drive : public frc::Subsystem {
 
   static std::shared_ptr<NetworkTable> limelight;
 
+  static bool autoMode;
+
   double tx,ty;
 
   double kDiffRate;
@@ -93,4 +95,7 @@ class Drive : public frc::Subsystem {
   void autoTest();
 
   void ArcadeDrive(double, double, bool);
+
+private:
+  BasicPID limelightPID;
 };

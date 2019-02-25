@@ -35,8 +35,8 @@ Elevator::Elevator() : Subsystem("ExampleSubsystem") {
   CSM_NEO_1.reset(new rev::CANSparkMax(2,rev::CANSparkMax::MotorType::kBrushless));
   CSM_RED.reset(new rev::CANSparkMax(8,rev::CANSparkMax::MotorType::kBrushed));
 
-  CSM_NEO_0->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
-  CSM_NEO_1->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  CSM_NEO_0->SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  CSM_NEO_1->SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
 
   // CSM_NEO_0->SetInverted(true);
 
@@ -67,10 +67,10 @@ void Elevator::Periodic(){
   }
   else if(joy2 -> GetRawButton(12)){
     SCG_main -> Set(-spd);
-  }
+  } 
   else 
   {
-    SCG_main -> Set(0);
+    SCG_main -> Set(-0.05);
   }
 
   double xspd = JOY_ele->GetThrottle();

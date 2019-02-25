@@ -36,6 +36,7 @@ class Robot : public frc::TimedRobot {
   static Elevator elevator;
   static Rabbit rabbit;
   static testor Testor;
+  static frc::Joystick pilot;
 
   void RobotInit() override;
   void RobotPeriodic() override;
