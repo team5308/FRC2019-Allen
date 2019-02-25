@@ -1,25 +1,18 @@
 /*----------------------------------------------------------------------------*/
 /* Copyright (c) 2019-2020 FRC Team 5308. All Rights Reserved.                */
 /* Author: Cetian Liu                                                          */                                                  */
-/* Filename: SparkMaxEncoder.cpp                                               */
+/* Filename: SensorGroup.cpp                                               */
 /* Project: Allen-Test-V2                                                    */
 /*----------------------------------------------------------------------------*/
 
-#include "ytz5308/SparkMaxEncoder.h"
+#include "subsystems/SensorGroup.h"
 
-namespace ytz5308 {
+SensorGroup::SensorGroup() : Subsystem("ExampleSubsystem") {}
 
-SparkMaxEncoder::SparkMaxEncoder(rev::CANSparkMax& device) : rev::CANEncoder(device) {
-    
-    orgPos = 0;
+void SensorGroup::InitDefaultCommand() {
+  // Set the default command for a subsystem here.
+  // SetDefaultCommand(new MySpecialCommand());
 }
 
-double SparkMaxEncoder::Get() {
-    return this->GetPosition() - orgPos; 
-}
-
-void SparkMaxEncoder::Reset() {
-    orgPos = rev::CANEncoder::GetPosition();
-}
-
-} // ytz5308
+// Put methods for controlling this subsystem
+// here. Call these from Commands.

@@ -6,11 +6,9 @@
 /*----------------------------------------------------------------------------*/
 
 #pragma once
-
-#include <frc/Spark.h>
+#include <frc/WPILib.h>
 
 class OI {
  public:
-  std::shared_ptr<frc::Spark> blink;
   OI();
 };

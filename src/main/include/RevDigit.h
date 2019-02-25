@@ -3,6 +3,9 @@
  *
  *  Created on: Feb 21, 2017
  *      Author: steve
+ * 
+ * 	Modified by: Cetian Liu
+ *  @github: Wu_Yuanhun
  */
 
 #ifndef SRC_UTIL_REVDIGIT_H_
@@ -22,10 +25,12 @@ class RevDigit {
 public:
 	static std::shared_ptr<RevDigit> self;
 	static std::shared_ptr<RevDigit> GetInstance();
-
+	static int last_volt;
+	
 	RevDigit();
 	void Init();
 	void Display(const char* message);
+	void Display(const double voltage);
 	bool GetA();
 	bool GetB();
 	double GetPotVoltage();

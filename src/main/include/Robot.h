@@ -11,6 +11,8 @@
 #include <frc/commands/Command.h>
 #include <frc/smartdashboard/SendableChooser.h>
 
+#include <cameraserver/CameraServer.h>
+
 #include "OI.h"
 #include "subsystems/CargoIntake.h"
 #include "subsystems/Drive.h"
@@ -28,9 +30,9 @@ class Robot : public frc::TimedRobot {
  public:
   static RevDigit m_revDigit;
   static OI m_oi;
+  static Pneumatics pneumatics;
   static CargoIntake cargoIntake;
   static Drive drive;
-  static Pneumatics pneumatics;
   static Elevator elevator;
   static Rabbit rabbit;
   static testor Testor;
@@ -43,6 +45,7 @@ class Robot : public frc::TimedRobot {
   void AutonomousPeriodic() override;
   void TeleopInit() override;
   void TeleopPeriodic() override;
+  void TestInit() override;
   void TestPeriodic() override;
 
  private:

@@ -10,7 +10,7 @@
 
 BasicPID::BasicPID() {
     rm_sum = 0;
-    cycNum = 100;
+    cycNum = 1000;
 }
 
 BasicPID::BasicPID(double p, double i, double d, int cycle_num = 100) 

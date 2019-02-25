@@ -1,8 +1,8 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
+/* Copyright (c) 2019-2020 FRC Team 5308. All Rights Reserved.                */
+/* Author: Cetian Liu                                                          */                                                  */
+/* Filename: Pneumatics.cpp                                               */
+/* Project: Allen-Test-V2                                                    */
 /*----------------------------------------------------------------------------*/
 
 #pragma once
@@ -13,10 +13,11 @@
 class Pneumatics : public frc::Subsystem {
  public:
   static std::shared_ptr<frc::Compressor> compressor;
-  
-  static std::shared_ptr<frc::Solenoid> drive_Mode0; 
+  static std::shared_ptr<frc::DoubleSolenoid> drive_Mode0; 
 
- 
+ private:
+ static std::shared_ptr<frc::DigitalInput> chickenLimitSwitch;
+
  public:
   Pneumatics();
   void InitDefaultCommand() override;     

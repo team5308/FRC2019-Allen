@@ -3,10 +3,13 @@
  *
  *  Created on: Feb 21, 2017
  *      Author: steve
+ * 
+ * 	Modified by: Cetian Liu
  */
 
 #include "RevDigit.h"
 
+int RevDigit::last_volt = 0;
 
 /*
  * Creates an instance of the Digit board.  You'll only need one.
@@ -79,6 +82,24 @@ void RevDigit::Display(const char* message) {
 	i2c->WriteBulk(msg, sizeof(msg));
 	std::this_thread::sleep_for(std::chrono::milliseconds(10));
 
+}
+
+void RevDigit::Display(const double voltage) 
+{
+	int volt = ((int) (voltage * 100)) % 10000;
+	if(std::abs(volt-last_volt) >= 15)
+	{
+		char mes[4];
+		for(int i=3;i>=0;i--) 
+		{
+			mes[i] = (char) (volt % 10) + '0';
+			volt /= 10;
+		}
+		this->Display(mes);
+	}
+	last_volt = volt;
+	
+	return ;
 }
 
 /*

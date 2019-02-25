@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------*/
-/*MIT                                                                         */
+/* This file is under MIT License                                                                     */
 /* Github: @WuYuanhun                                                         */
 /* Author: Cetian Liu                                                         */
 /* Date: 2019/02/01                                                           */

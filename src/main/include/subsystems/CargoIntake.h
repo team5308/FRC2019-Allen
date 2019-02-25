@@ -1,8 +1,8 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
+/* Copyright (c) 2019-2020 FRC Team 5308. All Rights Reserved.                */
+/* Author: Cetian Liu                                                          */                                                  */
+/* Filename: CargoIntake.h                                               */
+/* Project: Allen-Test-V2                                                    */
 /*----------------------------------------------------------------------------*/
 
 #pragma once
@@ -13,13 +13,17 @@
 #include <frc/WPILib.h>
 #include <ctre/Phoenix.h>
 
+#include "ytz5308/SparkMaxEncoder.h"
+
 #include "RevDigit.h"
 
 class CargoIntake : public frc::Subsystem {
  public:
 
+ static std::shared_ptr<frc::DigitalInput> armLimit;
+
   static std::shared_ptr<rev::CANSparkMax> CSM_NEO_Rab;
-  static std::shared_ptr<rev::CANEncoder> CE_Rab_Encoder;
+  static std::shared_ptr<ytz5308::SparkMaxEncoder> CE_Rab_Encoder;
 
   static std::shared_ptr<WPI_VictorSPX> VIC_775_Rab;
 

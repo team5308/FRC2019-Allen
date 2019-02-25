@@ -1,8 +1,8 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
+/* Copyright (c) 2019-2020 FRC Team 5308. All Rights Reserved.                */
+/* Author: Cetian Liu                                                          */                                                  */
+/* Filename: Rabbit.h                                               */
+/* Project: Allen-Test-V2                                                    */
 /*----------------------------------------------------------------------------*/
 
 #pragma once
@@ -17,7 +17,7 @@
 
 
 class Rabbit : public frc::Subsystem {
- private:
+ public:
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
 
@@ -33,7 +33,7 @@ class Rabbit : public frc::Subsystem {
 
   /*Deanck*/
   static std::shared_ptr<frc::Solenoid> SOL_delift;
-  static std::shared_ptr<frc::Solenoid> SOL_deDick;
+  static std::shared_ptr<frc::DoubleSolenoid> SOL_deDick;
 
 
  public:

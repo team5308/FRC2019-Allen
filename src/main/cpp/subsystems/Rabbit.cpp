@@ -1,8 +1,8 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
+/* Copyright (c) 2019-2020 FRC Team 5308. All Rights Reserved.                */
+/* Author: Cetian Liu                                                          */                                                  */
+/* Filename: Rabbit.cpp                                               */
+/* Project: Allen-Test-V2                                                    */
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/Rabbit.h"
@@ -16,16 +16,19 @@ std::shared_ptr<rev::CANEncoder> Rabbit::CE_rab;
 std::shared_ptr<frc::Solenoid> Rabbit::SOL_rab; 
 
 std::shared_ptr<frc::Solenoid> Rabbit::SOL_delift;
-std::shared_ptr<frc::Solenoid> Rabbit::SOL_deDick;
+std::shared_ptr<frc::DoubleSolenoid> Rabbit::SOL_deDick;
 
 Rabbit::Rabbit() : Subsystem("ExampleSubsystem") {
-  JOY_rab.reset(new frc::Joystick(2));
+  JOY_rab.reset(new frc::Joystick(0));
   
   TAL_rab.reset(new WPI_TalonSRX(1));
 
   CSM_rab.reset(new rev::CANSparkMax(0,rev::CANSparkMax::MotorType::kBrushless));
   
   CE_rab.reset(new rev::CANEncoder(*CSM_rab));
+
+  SOL_deDick.reset(new frc::DoubleSolenoid(11, 2, 3));
+  SOL_deDick->Set( (frc::DoubleSolenoid::Value) 1);
 }
 
 void Rabbit::InitDefaultCommand() {
@@ -54,4 +57,17 @@ void Rabbit::Periodic(){
       TAL_rab -> Set(0.0);
   }
   }
+
+  if(JOY_rab -> GetRawButtonPressed(6))
+  {
+    printf("Fucked!\n");
+    SOL_deDick -> Set( (frc::DoubleSolenoid::Value) 2);
+    // SOL_deDick -> Set( (frc::DoubleSolenoid::Value) (3 - (int) SOL_deDick->Get()));
+  }
+  else if(JOY_rab -> GetRawButtonPressed(5))
+  {
+    SOL_deDick->Set((frc::DoubleSolenoid::Value) 1);
+  }
+  
+  
 }

@@ -76,7 +76,8 @@
     "ios": "cpp",
     "locale": "cpp",
     "set": "cpp",
-    "iostream": "cpp"
+    "iostream": "cpp",
+    "queue": "cpp"
   },
   "C_Cpp.intelliSenseEngineFallback": "Disabled"
 }

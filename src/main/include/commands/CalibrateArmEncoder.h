@@ -5,8 +5,17 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "OI.h"
+#pragma once
 
+#include <frc/commands/Command.h>
+#include "Robot.h"
 
-
-OI::OI() {}
+class CalibrateArmEncoder : public frc::Command {
+ public:
+  CalibrateArmEncoder();
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
+};

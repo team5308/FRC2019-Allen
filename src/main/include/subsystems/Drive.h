@@ -1,8 +1,8 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
+/* Copyright (c) 2019-2020 FRC Team 5308. All Rights Reserved.                */
+/* Author: Cetian Liu                                                          */                                                  */
+/* Filename: Drive.h                                               */
+/* Project: Allen-Test-V2                                                    */
 /*----------------------------------------------------------------------------*/
 
 #pragma once
@@ -11,6 +11,7 @@
 #include <frc/WPILib.h>
 #include <ctre/Phoenix.h>
 #include "rev/CANSparkMax.h"
+#include <rev/CANEncoder.h>
 #include "BasicPID.h"
 // #include "DriveInfo.h"
 #include "networktables/NetworkTable.h"
@@ -29,7 +30,7 @@ inline double abs(double x){
 }
 
 inline double suoqu(double x){
-  if(abs(x) < 0.14){
+  if(abs(x) < 0.13){
     return 0.0;
   }else{
     return x;
@@ -38,13 +39,23 @@ inline double suoqu(double x){
 
 class Drive : public frc::Subsystem {
  private:
+
+  static constexpr double deadBanValueMin = 0.2;
+  static constexpr double rightSideOpter = -0.92;
+
+  static constexpr double highModek = 6 * 3.1415926 * 2.54 / 7.16;
+  static constexpr double lowModek  = 6 * 3.1415926 * 2.54 / 22.67;
+
+  static double applyDeadBan(double);
+
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
-  BasicPID drivePID;
-  BasicPID rightPID;
+  // BasicPID drivePID;
+  // BasicPID rightPID;
 
-  static constexpr double highModek = 6 * 3.1415926 * 2.54 /
-   7.16;
+  // BasicPID forPID;
+  
+
   void forward(double);
  public:
   Drive();
@@ -63,7 +74,7 @@ class Drive : public frc::Subsystem {
   static std::shared_ptr<rev::CANSparkMax> CSM_CIM_right;
   static std::shared_ptr<WPI_TalonSRX>     TAL_CIM_right;
 
-  static std::shared_ptr<ytz5308::SparkMaxEncoder> CE_left;
+  static std::shared_ptr<rev::CANEncoder> CE_left;
   static std::shared_ptr<rev::CANEncoder> CE_right;
 
   static std::shared_ptr<frc::SpeedControllerGroup> SCG_left;
@@ -77,5 +88,9 @@ class Drive : public frc::Subsystem {
 
   double kDiffRate;
 
+  bool kInverted;
+
   void autoTest();
+
+  void ArcadeDrive(double, double, bool);
 };
