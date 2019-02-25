@@ -19,7 +19,7 @@ Drive Robot::drive;
 Elevator Robot::elevator;
 Rabbit Robot::rabbit;
 
-testor Robot::Testor;
+// testor Robot::Testor;
 
 void Robot::RobotInit() {
 
@@ -58,7 +58,7 @@ void Robot::RobotPeriodic() {
  * robot is disabled.
  */
 void Robot::DisabledInit() {
-  CargoIntake::CSM_NEO_Rab->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  // CargoIntake::CSM_NEO_Rab->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
 }
 
 void Robot::DisabledPeriodic() {
