@@ -13,12 +13,14 @@
 class Pneumatics : public frc::Subsystem {
  public:
   static std::shared_ptr<frc::Compressor> compressor;
-  static std::shared_ptr<frc::DoubleSolenoid> drive_Mode0; 
+  static std::shared_ptr<frc::DoubleSolenoid> drive_Mode0;
+  static std::shared_ptr<frc::Joystick> JOY1;
 
  private:
  static std::shared_ptr<frc::DigitalInput> chickenLimitSwitch;
 
  public:
   Pneumatics();
-  void InitDefaultCommand() override;     
+  void InitDefaultCommand() override;    
+  void Periodic(); 
 };

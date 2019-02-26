@@ -28,11 +28,12 @@ CargoIntake::CargoIntake() : Subsystem("CargoIntake") {
 
   CE_Rab_Encoder.reset(new ytz5308::SparkMaxEncoder(*CSM_NEO_Rab));
 
-  VIC_775_Rab.reset(new WPI_VictorSPX(22));
+  VIC_775_Rab.reset(new WPI_VictorSPX(23));
   joystick.reset(new frc::Joystick(0));
 
   curPos = CE_Rab_Encoder->GetPosition();
 
+  CE_PID.setPara(1, 0, 0);
 }
 
 void CargoIntake::InitDefaultCommand() {
@@ -55,16 +56,20 @@ void CargoIntake::Periodic() {
   if(joystick->GetRawButton(11))
   {
     CSM_NEO_Rab->Set(spd);
-    RevDigit::GetInstance()->Display("0501");
+    // RevDigit::GetInstance()->Display("0501");
   }
   else if(joystick->GetRawButton(12))
   {
     CSM_NEO_Rab->Set(-spd);
-    RevDigit::GetInstance()->Display("0500");
+    // RevDigit::GetInstance()->Display("0500");
   }
   else
   {
     CSM_NEO_Rab->Set(0);
+  }
+
+  if(joystick->GetRawButton(2)){
+    AutoLock(1);
   }
 
   cargoSpeed = joystick->GetThrottle();
@@ -78,4 +83,32 @@ void CargoIntake::Periodic() {
     VIC_775_Rab->Set(0);
   }
   printf("CE: %.2f\n", CE_Rab_Encoder->GetPosition());
+}
+
+void CargoIntake::AutoLock(int target){
+  double CE_CurPos = CE_Rab_Encoder->GetPosition();
+  double CE_TarPos = CE_CurPos;
+  if(target == 1){
+    double CE_TarPos = 30;
+  }
+  double CE_Error = CE_TarPos - CE_CurPos;
+
+  while(CE_Error >= 1 || CE_Error <= -1){
+    CE_CurPos = CE_Rab_Encoder->GetPosition();
+    // CE_2_CurPos = CE_2->GetPosition();
+    CE_Error = CE_CurPos - CE_TarPos;
+    // CE_2_Error = CE_2_CurPos - CE_2_TarPo;
+    CE_PID.push(CE_Error);
+    double usingOutput1;
+    if(CE_PID.outputValue >=1){
+      usingOutput1 = 0.2;
+    }
+    else if(CE_PID.outputValue <=-1){
+      usingOutput1 = -0.2;
+    }
+    else{
+      usingOutput1 = CE_PID.outputValue * 0.2;
+    }
+    CSM_NEO_Rab -> Set(usingOutput1);
+  }
 }

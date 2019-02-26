@@ -1,8 +1,8 @@
 /*----------------------------------------------------------------------------*/
 /* Copyright (c) 2019-2020 FRC Team 5308. All Rights Reserved.                */
-/* Author: Cetian Liu                                                          */                              
-/* Filename: Drive.cpp                                               */
-/* Project: Allen-Test-V2                                                    */
+/* Author: Cetian Liu                                                         */                              
+/* Filename: Drive.cpp                                                        */
+/* Project: Allen-Test-V2                                                     */
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/Drive.h"
@@ -79,7 +79,7 @@ void Drive::Periodic(){
 
   if(autoMode) 
   {
-    printf("limelight: tx: %.2f\n", tx);
+    // printf("limelight: tx: %.2f\n", tx);
     limelightPID.push(tx);
     double limelightSpeed = limelightPID.outputValue;
     if(joystick->GetRawButton(4))
@@ -118,7 +118,7 @@ void Drive::Periodic(){
 
   #ifdef __DRIVE_OUT_PUT_Mode
   
-  printf("left: %.2f   right: %.2f\n", CE_left->GetPosition(), CE_right->GetPosition());
+  // printf("left: %.2f   right: %.2f\n", CE_left->GetPosition(), CE_right->GetPosition());
   
   #endif
   // printf("leftV: %.2f   rightV:%.2f\n", CE_left->GetVelocity(), CE_right->GetVelocity());

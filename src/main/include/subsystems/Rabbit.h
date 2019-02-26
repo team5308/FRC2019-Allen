@@ -21,20 +21,10 @@ class Rabbit : public frc::Subsystem {
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
 
-  /*Rabit: */
-  static std::shared_ptr<frc::Joystick> JOY_rab;
+  static std::shared_ptr<frc::Joystick> JOY2;
 
-  static std::shared_ptr<WPI_TalonSRX> TAL_rab;
-  static std::shared_ptr<rev::CANSparkMax> CSM_rab;
-  
-  static std::shared_ptr<rev::CANEncoder> CE_rab;
-
-  static std::shared_ptr<frc::Solenoid> SOL_rab;
-
-  /*Deanck*/
-  static std::shared_ptr<frc::Solenoid> SOL_delift;
-  static std::shared_ptr<frc::DoubleSolenoid> SOL_deDick;
-
+  static std::shared_ptr<frc::Solenoid> SOL_de1;
+  static std::shared_ptr<frc::DoubleSolenoid> SOL_de23;
 
  public:
   Rabbit();

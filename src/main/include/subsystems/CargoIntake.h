@@ -17,6 +17,8 @@
 
 #include "RevDigit.h"
 
+#include "BasicPID.h"
+
 class CargoIntake : public frc::Subsystem {
  public:
 
@@ -36,4 +38,7 @@ class CargoIntake : public frc::Subsystem {
   CargoIntake();
   void InitDefaultCommand() override;
   void Periodic() override;
+  void AutoLock(int);
+  
+  BasicPID CE_PID;
 };

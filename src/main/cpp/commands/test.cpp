@@ -10,6 +10,7 @@
 test::test() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
+  Requires(&Robot::pneumatics);
 }
 
 // Called just before this Command runs the first time
@@ -17,8 +18,7 @@ void test::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void test::Execute() {
-  printf("Test Command!\n");
-  Robot::Testor.test_default();
+  Robot::pneumatics.Periodic();
 }
 
 // Make this return true when this Command no longer needs to run execute()
