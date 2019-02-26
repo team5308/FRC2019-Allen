@@ -50,7 +50,7 @@ void Elevator::InitDefaultCommand() {
 }
 
 void Elevator::Periodic(){
-  TAL_RED -> Set(JOY_ele->GetY()); 
+  TAL_RED -> Set(limit(JOY_ele->GetY())); 
 
   if(JOY_ele->GetRawButton(12)){
     SCG_main->Set(0.2);
@@ -69,7 +69,7 @@ void Elevator::Periodic(){
   {
     carrige->Set(0);
   }
-  printf("%f",CE_1->GetPosition());
+  printf("%.2f",CE_1->GetPosition());
 }
 
 double Elevator::limit(double x) {
