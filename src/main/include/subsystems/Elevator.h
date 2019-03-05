@@ -13,28 +13,43 @@
 #include <ctre/Phoenix.h>
 #include "BasicPID.h"
 
+// enum levelValue {kFree = 0, kBottom = 1, kMid = 2, kTop = 3};
+
+// struct levelData {
+//   double kMain;
+//   double kSub;
+//   levelData () {};
+//   levelData (double kMain, double kSub) : kMain(kMain), kSub(kSub) {};
+
+//   virtual void calibrate();
+//  };
+
 class Elevator : public frc::Subsystem {
  private:
-  // It's desirable that everything possible under private except
-  // for methods that implement subsystem capabilities
+ double kMainEncoderRate;
+ double kRedEncoderRate;
 
  public:
+
+  // levelData  eleData[4];
+
+
   Elevator();
   void InitDefaultCommand() override;
   void Periodic();
-  // void ChangeLevel(int);
+  // void moveToLevel(levelValue);
 
   static double limit(double);
 
   static std::shared_ptr<frc::Joystick> JOY_ele;
+  static std::shared_ptr<frc::Joystick> joystick1;
 
   static std::shared_ptr<rev::CANSparkMax> CSM_NEO_0;
   static std::shared_ptr<rev::CANSparkMax> CSM_NEO_1;
-  // static std::shared_ptr<rev::CANSparkMax> CSM_RED;
-  static std::shared_ptr<WPI_TalonSRX> TAL_RED;
 
-  static std::shared_ptr<rev::CANEncoder> CE_1;
-  // static std::shared_ptr<rev::CANEncoder> CE_2;
+  static std::shared_ptr<WPI_TalonSRX> TAL_Red;
+
+  static std::shared_ptr<rev::CANEncoder> CE_Main;
 
   static std::shared_ptr<frc::SpeedControllerGroup> SCG_main;
 
@@ -43,13 +58,19 @@ class Elevator : public frc::Subsystem {
   
   static std::shared_ptr<frc::SpeedControllerGroup> carrige;
 
+  static std::shared_ptr<frc::DigitalInput> cargoLimitSwitch;
+  static bool preCargo;
+  static bool curCargo;
+
   BasicPID NEO_PID;
   BasicPID RED_PID;
 
-  int level1_1 = 100;
-  int level1_2 = 200;
-  int level1_3 = 300;
-  int level2_1 = 100;
-  int level2_2 = 200;
-  int level2_3 = 300;
+  double NeoPosition();
+  double RedPosition();
+
+  int index = 0;
+  int stpIndex = 0;
+
+  static bool hasIn;
+
 };
