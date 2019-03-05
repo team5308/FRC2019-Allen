@@ -13,13 +13,37 @@
  * the wiring easier and significantly reduces the number of magic numbers
  * floating around.
  */
+namespace RobotMap {
 
-// For example to map the left and right motors, you could define the
-// following variables to use with your drivetrain subsystem.
-// constexpr int kLeftMotor = 1;
-// constexpr int kRightMotor = 2;
+namespace sensor {
+    constexpr int DIOLaserSwitch = 5;
+};
 
-// If you are using multiple modules, make sure to define both the port
-// number and the module. For example you with a rangefinder:
-// constexpr int kRangeFinderPort = 1;
-// constexpr int kRangeFinderModule = 1;
+namespace Drive {
+
+    namespace Left {
+        constexpr int CANSparkNeo;
+        constexpr int CANSparkCIM;
+        constexpr int CANTalonCIM;
+    };
+
+    namespace Right {
+        constexpr int CANSparkNeo;
+        constexpr int CANSparkCIM;
+        constexpr int CANTalonCIM;
+    };
+
+};
+
+namespace Carriage {
+    namespace Motor {
+        constexpr int LeftWheel;
+        constexpr int RightWheel;
+    };
+};
+
+namespace Elevator {
+    constexpr int ForwardNeo;
+    constexpr int BackwardNeo;
+    constexpr int SecondStageTalon;
+};

@@ -1,9 +1,16 @@
 # List
  - Cargo Intake Lock
- - Carriage Cargo Auto-Lock    done
+ - Carriage Cargo Auto-Lock \0\0\0\0\0\0\0   done
  - Elevator Floor Lock
- - Streaming Boardcast         Need Test
+ - Streaming Boardcast      \0\0\0\0\0\0   Need Test
+ - RobotMap Update & Reframe  \0\0\0\0\0\0\0\0 Done & Wait Test
 
+# RobotMap (test)
+Try to define all the port numbers for controllors & sensors in RobotMap.h 
+
+Make the code easier to acess and maintain 
+
+[CST 2019/03/05 Tue. 16:23]
 
 # key blinding
 
