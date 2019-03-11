@@ -11,11 +11,13 @@ std::shared_ptr<frc::Joystick> Drive::joystick;
 
 std::shared_ptr<rev::CANSparkMax> Drive::CSM_NEO_left;
 std::shared_ptr<rev::CANSparkMax> Drive::CSM_CIM_left;
-std::shared_ptr<WPI_TalonSRX>     Drive::TAL_CIM_left;
+// std::shared_ptr<WPI_TalonSRX>     Drive::TAL_CIM_left;
+std::shared_ptr<rev::CANSparkMax> Drive::CSM_NEO2_left;
 
 std::shared_ptr<rev::CANSparkMax> Drive::CSM_NEO_right;
 std::shared_ptr<rev::CANSparkMax> Drive::CSM_CIM_right;
-std::shared_ptr<WPI_TalonSRX>     Drive::TAL_CIM_right;
+// std::shared_ptr<WPI_TalonSRX>     Drive::TAL_CIM_right;
+std::shared_ptr<rev::CANSparkMax> Drive::CSM_NEO2_right;
 
 std::shared_ptr<rev::CANEncoder> Drive::CE_left;
 std::shared_ptr<rev::CANEncoder> Drive::CE_right;
@@ -33,20 +35,24 @@ Drive::Drive() : Subsystem("Drive") {
   joystick.reset(new frc::Joystick(0));
 
   CSM_NEO_left.reset(new rev::CANSparkMax(6,rev::CANSparkMax::MotorType::kBrushless));
-  CSM_CIM_left.reset(new rev::CANSparkMax(7,rev::CANSparkMax::MotorType::kBrushed));
-  TAL_CIM_left.reset(new WPI_TalonSRX(21));
-  CSM_CIM_left->SetInverted(true);
+  CSM_CIM_left.reset(new rev::CANSparkMax(7,rev::CANSparkMax::MotorType::kBrushless));
+  // TAL_CIM_left.reset(new WPI_TalonSRX(21));
+  CSM_NEO2_left.reset(new rev::CANSparkMax(31, rev::CANSparkMax::MotorType::kBrushless));
+  // CSM_CIM_left->SetInverted(true);
 
   CSM_NEO_left->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
   CSM_CIM_left->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  CSM_NEO2_left->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
 
   CSM_NEO_right.reset(new rev::CANSparkMax(4,rev::CANSparkMax::MotorType::kBrushless));
-  CSM_CIM_right.reset(new rev::CANSparkMax(5,rev::CANSparkMax::MotorType::kBrushed));
-  TAL_CIM_right.reset(new WPI_TalonSRX(25));
-  CSM_CIM_right->SetInverted(true);
+  CSM_CIM_right.reset(new rev::CANSparkMax(5,rev::CANSparkMax::MotorType::kBrushless));
+  // TAL_CIM_right.reset(new WPI_TalonSRX(25));
+  CSM_NEO2_right.reset(new rev::CANSparkMax(32, rev::CANSparkMax::MotorType::kBrushless));
+  // CSM_CIM_right->SetInverted(true);
 
   CSM_NEO_right->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
   CSM_CIM_right->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  CSM_NEO2_right->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
 
   CE_left.reset(new rev::CANEncoder(*CSM_NEO_left));
   CE_right.reset(new rev::CANEncoder(*CSM_NEO_right));
@@ -54,8 +60,8 @@ Drive::Drive() : Subsystem("Drive") {
   CE_left->SetPositionConversionFactor(highModek);
   CE_right->SetPositionConversionFactor(highModek);
 
-  SCG_left = std::make_shared<frc::SpeedControllerGroup>(*CSM_NEO_left, *CSM_CIM_left,*TAL_CIM_left);
-  SCG_right = std::make_shared<frc::SpeedControllerGroup>(*CSM_NEO_right, *CSM_CIM_right,*TAL_CIM_right);
+  SCG_left = std::make_shared<frc::SpeedControllerGroup>(*CSM_NEO_left, *CSM_CIM_left);
+  SCG_right = std::make_shared<frc::SpeedControllerGroup>(*CSM_NEO_right, *CSM_CIM_right);
 
   SCG_left -> SetInverted(true);
   SCG_right -> SetInverted(true);
@@ -163,8 +169,8 @@ void Drive::ArcadeDrive(double x, double y, bool squareInput = true)
     }
   }
   
-  SCG_left -> Set(applyDeadBan(leftOutput));
-  SCG_right -> Set(applyDeadBan(rightOutput) * rightSideOpter );
+  SCG_left -> Set(applyDeadBan(0.6 *leftOutput));
+  SCG_right -> Set(applyDeadBan(0.6 * rightOutput) * rightSideOpter );
 
 }
 

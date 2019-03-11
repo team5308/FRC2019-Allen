@@ -20,6 +20,8 @@ Pneumatics::Pneumatics() : Subsystem("Pneumatics") {
 
   JOY1.reset(new frc::Joystick(0));
 
+  compressor->Start();
+
   // chickenLimitSwitch.reset(new frc::DigitalInput(8));
 }
 

@@ -17,33 +17,25 @@ Rabbit::Rabbit() : Subsystem("ExampleSubsystem") {
 
   SOL_de1.reset(new frc::Solenoid(11, 1));
   SOL_de23.reset(new frc::DoubleSolenoid(11, 2, 3));
+  SOL_de23->Set(frc::DoubleSolenoid::kReverse);
 }
 
 void Rabbit::InitDefaultCommand() {
-  // Set the default command for a subsystem here.
-  // SetDefaultCommand(new MySpecialCommand());
 }
 
-// Put methods for controlling this subsystem
-// here. Call these from Commands.TRUE
-
 void Rabbit::Periodic(){
-  if(JOY2 -> GetRawButton(5))
+  if(JOY2 -> GetRawButtonPressed(3))
   {
     SOL_de1->Set(true);
-    
   }
-  else if(JOY2 -> GetRawButton(6))
+  else if(JOY2 -> GetRawButtonPressed(4))
   {
     SOL_de1->Set(false);
   }
-  if(JOY2 -> GetRawButton(3))
+
+  if(JOY2 -> GetRawButtonPressed(2))
   {
-    SOL_de23->Set(frc::DoubleSolenoid::kForward);
+    SOL_de23->Set((frc::DoubleSolenoid::Value) (3 - SOL_de23->Get()));
   }
-  else if(JOY2 -> GetRawButton(4))
-  {
-    SOL_de23->Set(frc::DoubleSolenoid::kReverse);
-  }  
   
 }

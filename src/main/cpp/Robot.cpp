@@ -28,7 +28,7 @@ void Robot::RobotInit() {
   // Testor.test_default();
   frc::CameraServer::GetInstance()->StartAutomaticCapture("cam", 0);
 
-  Pneumatics::compressor->Stop();
+  //Pneumatics::compressor->Start();
 }
 
 /**
@@ -43,16 +43,16 @@ void Robot::RobotPeriodic() {
   
   // m_oi.blink->Set(-0.21);
 
-  if(m_revDigit.GetA() || pilot.GetRawButtonPressed(9))
-  {
-    Pneumatics::compressor->Stop();
-    // Rabbit::SOL_deDick->Set(false);
-  }
-  else if(m_revDigit.GetB())
-  {
-    Pneumatics::compressor->Start();
-    // Rabbit::SOL_deDick->Set(true);
-  }
+  // if(m_revDigit.GetA() || pilot.GetRawButtonPressed(9))
+  // {
+  //   Pneumatics::compressor->Stop();
+  //   // Rabbit::SOL_deDick->Set(false);
+  // }
+  // else if(m_revDigit.GetB())
+  // {
+  //   Pneumatics::compressor->Start();
+  //   // Rabbit::SOL_deDick->Set(true);
+  
 }
 
 /**
@@ -99,6 +99,7 @@ void Robot::AutonomousInit() {
 void Robot::AutonomousPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
 void Robot::TeleopInit() {
+  Pneumatics::compressor->Start();
   // This makes sure that the autonomous stops running when
   // teleop starts running. If you want the autonomous to
   // continue until interrupted by another command, remove

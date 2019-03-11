@@ -7,22 +7,14 @@
 
 #pragma once
 
+#include "subsystems/levelData.h"
+
 #include <frc/commands/Subsystem.h>
 #include "rev/CANSparkMax.h"
 #include <frc/WPILib.h>
 #include <ctre/Phoenix.h>
 #include "BasicPID.h"
 
-// enum levelValue {kFree = 0, kBottom = 1, kMid = 2, kTop = 3};
-
-// struct levelData {
-//   double kMain;
-//   double kSub;
-//   levelData () {};
-//   levelData (double kMain, double kSub) : kMain(kMain), kSub(kSub) {};
-
-//   virtual void calibrate();
-//  };
 
 class Elevator : public frc::Subsystem {
  private:
@@ -30,9 +22,7 @@ class Elevator : public frc::Subsystem {
  double kRedEncoderRate;
 
  public:
-
-  // levelData  eleData[4];
-
+  static levelData kLevel[4];
 
   Elevator();
   void InitDefaultCommand() override;
@@ -47,9 +37,10 @@ class Elevator : public frc::Subsystem {
   static std::shared_ptr<rev::CANSparkMax> CSM_NEO_0;
   static std::shared_ptr<rev::CANSparkMax> CSM_NEO_1;
 
-  static std::shared_ptr<WPI_TalonSRX> TAL_Red;
+  static std::shared_ptr<rev::CANSparkMax> CSM_Sub;
 
   static std::shared_ptr<rev::CANEncoder> CE_Main;
+  static std::shared_ptr<rev::CANEncoder> CE_Sub;
 
   static std::shared_ptr<frc::SpeedControllerGroup> SCG_main;
 

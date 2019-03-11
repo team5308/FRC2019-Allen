@@ -68,11 +68,13 @@ class Drive : public frc::Subsystem {
 
   static std::shared_ptr<rev::CANSparkMax> CSM_NEO_left;
   static std::shared_ptr<rev::CANSparkMax> CSM_CIM_left;
-  static std::shared_ptr<WPI_TalonSRX>     TAL_CIM_left;
+  // static std::shared_ptr<WPI_TalonSRX>    TAL_CIM_left;
+  static std::shared_ptr<rev::CANSparkMax> CSM_NEO2_left;
 
   static std::shared_ptr<rev::CANSparkMax> CSM_NEO_right;
   static std::shared_ptr<rev::CANSparkMax> CSM_CIM_right;
-  static std::shared_ptr<WPI_TalonSRX>     TAL_CIM_right;
+  // static std::shared_ptr<WPI_TalonSRX>     TAL_CIM_right;
+  static std::shared_ptr<rev::CANSparkMax> CSM_NEO2_right;
 
   static std::shared_ptr<rev::CANEncoder> CE_left;
   static std::shared_ptr<rev::CANEncoder> CE_right;

@@ -41,6 +41,7 @@ void CargoIntake::InitDefaultCommand() {
 
 void CargoIntake::Periodic() {
 
+  #ifdef Use_Arm_Limit_Switch_Option
   if(armLimit->Get())
   {
     // RevDigit::GetInstance()->Display("True");
@@ -51,14 +52,15 @@ void CargoIntake::Periodic() {
     CE_Rab_Encoder -> Reset();
     // RevDigit::GetInstance()->Display("Flas");
   }
+  #endif
   
 
-  if(joystick->GetRawButton(11))
+  if(joystick->GetRawButton(7))
   {
     CSM_NEO_Rab->Set(spd);
     // RevDigit::GetInstance()->Display("0501");
   }
-  else if(joystick->GetRawButton(12))
+  else if(joystick->GetRawButton(8))
   {
     CSM_NEO_Rab->Set(-spd);
     // RevDigit::GetInstance()->Display("0500");
@@ -68,9 +70,9 @@ void CargoIntake::Periodic() {
     CSM_NEO_Rab->Set(0);
   }
 
-  if(joystick->GetRawButton(2)){
-    AutoLock(1);
-  }
+  // if(joystick->GetRawButton(2)){
+  //   AutoLock(1);
+  // }
 
   cargoSpeed = joystick->GetThrottle();
 
