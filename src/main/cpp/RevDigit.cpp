@@ -10,6 +10,8 @@
 #include "RevDigit.h"
 
 int RevDigit::last_volt = 0;
+bool RevDigit::last_A = false;
+bool RevDigit::last_B = false;
 
 /*
  * Creates an instance of the Digit board.  You'll only need one.
@@ -24,7 +26,6 @@ RevDigit::RevDigit()
 	this->pot = new AnalogInput(POTENTIOMETER);
 
 	this->Init();
-
 	self.reset(this);
 }
 
@@ -267,4 +268,34 @@ std::shared_ptr<RevDigit> RevDigit::self;
 std::shared_ptr<RevDigit> RevDigit::GetInstance() 
 {
 	return self;
+}
+
+bool RevDigit::GetAPressed()
+{
+	bool stat = GetA();
+	if(stat==true && last_A == false)
+	{
+		last_A = stat;
+		return true;
+	}
+	else
+	{
+		last_A = stat;
+		return false;
+	}
+}
+
+bool RevDigit::GetBPressed()
+{
+	bool stat = GetB();
+	if(stat==true && last_B == false)
+	{
+		last_B = stat;
+		return true;
+	}
+	else
+	{
+		last_B = stat;
+		return false;
+	}	
 }

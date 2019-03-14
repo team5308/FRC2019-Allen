@@ -42,7 +42,7 @@ Make the code easier to acess and maintain
 | Level - Ground            | Co Pilot |           | Press            |
 | level - Mid               | Co Pilot |           | Press            |
 | level - Top               | Co Pilot |           | Press            |
-| Up / Down                 | Co Pilot | POV       | Axis             |
+| Up / Down                 | Co Pilot | POV  /5 / 10     | Axis             |
 
 ## Carriage
 | Functionality             | Pilot  p  | Key       | Operation Method |

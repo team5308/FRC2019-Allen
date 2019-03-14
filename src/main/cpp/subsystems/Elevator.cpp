@@ -49,7 +49,7 @@ Elevator::Elevator() : Subsystem("Elevator") {
   JOY_ele.reset(new frc::Joystick(1));
 
   CSM_NEO_0.reset(new rev::CANSparkMax(3,rev::CANSparkMax::MotorType::kBrushless));
-  CSM_NEO_1.reset(new rev::CANSparkMax(2,rev::CANSparkMax::MotorType::kBrushless));
+  CSM_NEO_1.reset(new rev::CANSparkMax(8,rev::CANSparkMax::MotorType::kBrushless));
   // TAL_RED.reset(new WPI_TalonSRX(29));
 
   CSM_NEO_0->SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
@@ -75,6 +75,7 @@ Elevator::Elevator() : Subsystem("Elevator") {
 
   CSM_Sub.reset(new rev::CANSparkMax(33, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   CE_Sub.reset(new rev::CANEncoder(*CSM_Sub));
+  CSM_Sub->SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
 }
 
 void Elevator::InitDefaultCommand() {
@@ -96,8 +97,10 @@ void Elevator::Periodic() {
 
   // True means Cargo on the ship!
 
-  double xspd = joystick1->GetThrottle();
+  // double xspd = joystick1->GetThrottle();
+  double xspd = 0.4;
 
+#ifdef We_Have_Fix_Switch
   if( !hasIn && joystick1->GetRawButton(1)) {
     VIC_Car_left->Set(xspd);
     VIC_Car_right->Set(-xspd);
@@ -110,6 +113,13 @@ void Elevator::Periodic() {
   else
   {
     carrige->Set(0);
+  }
+#endif
+
+  if(joystick1->GetRawButton(1))
+  {
+    VIC_Car_left->Set(xspd);
+    VIC_Car_right->Set(-xspd);
   }
 
   double ospd = JOY_ele->GetThrottle();
@@ -128,21 +138,38 @@ void Elevator::Periodic() {
     }
   }
 
-  double spd = 0.2;
-  if(JOY_ele -> GetPOV(0)){
+
+// 电梯上下逻辑
+  double spd = 0.5;
+  if( JOY_ele -> GetRawButton(5)){
     SCG_main -> Set(spd);
+    // CSM_Sub  -> Set(spd);
+    printf("Ele up\n");
   }
-  else if(JOY_ele -> GetPOV(180)){
+  else if(JOY_ele -> GetRawButton(10)){
     SCG_main -> Set(-spd);
-  } 
-  else if(JOY_ele -> GetRawButton(2))
-  {
-    SCG_main -> Set(-0.05);
+    // CSM_Sub  -> Set(-spd);
+    // printf("Ele down\n");
   }
   else{
     SCG_main -> Set(0);
+    // CSM_Sub  -> Set(0);
   }
-
+  
+  if( JOY_ele -> GetRawButton(6))
+  {
+    CSM_Sub -> Set(spd);
+  }
+  else if(JOY_ele -> GetRawButton(9))
+  {
+    CSM_Sub -> Set(-spd);
+  }
+  else
+  {
+    CSM_Sub -> Set(0);
+  }
+  
+  printf("encoder_Sub: %.2f\n", CE_Sub -> GetPosition());
 }
 
 double Elevator::limit(double x) {

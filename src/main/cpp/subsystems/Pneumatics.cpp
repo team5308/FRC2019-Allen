@@ -10,6 +10,7 @@
 std::shared_ptr<frc::Compressor> Pneumatics::compressor;
 std::shared_ptr<frc::DoubleSolenoid> Pneumatics::drive_Mode0;
 std::shared_ptr<frc::Joystick> Pneumatics::JOY1;
+std::shared_ptr<frc::Joystick> Pneumatics::coJoy;
 
 Pneumatics::Pneumatics() : Subsystem("Pneumatics") {
   
@@ -19,6 +20,7 @@ Pneumatics::Pneumatics() : Subsystem("Pneumatics") {
   drive_Mode0->Set( (frc::DoubleSolenoid::Value) 1);
 
   JOY1.reset(new frc::Joystick(0));
+  coJoy.reset(new frc::Joystick(1));
 
   compressor->Start();
 
@@ -39,5 +41,9 @@ void Pneumatics::Periodic(){
   else if(JOY1 -> GetRawButton(5))
   {
     drive_Mode0->Set((frc::DoubleSolenoid::Value) 1);
+  }
+  if(coJoy -> GetRawButton(14))
+  {
+    bool isOpen = compressor->GetCompressorCurrent();
   }
 }

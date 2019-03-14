@@ -15,6 +15,7 @@ class Pneumatics : public frc::Subsystem {
   static std::shared_ptr<frc::Compressor> compressor;
   static std::shared_ptr<frc::DoubleSolenoid> drive_Mode0;
   static std::shared_ptr<frc::Joystick> JOY1;
+  static std::shared_ptr<frc::Joystick> coJoy;
 
  private:
  static std::shared_ptr<frc::DigitalInput> chickenLimitSwitch;

@@ -9,9 +9,9 @@
 
 #include <frc/commands/Scheduler.h>
 
+
 RevDigit Robot::m_revDigit;
 OI Robot::m_oi;
-
 Pneumatics Robot::pneumatics;
 CargoIntake Robot::cargoIntake;
 Drive Robot::drive;
@@ -26,7 +26,8 @@ void Robot::RobotInit() {
 
   CargoIntake::CSM_NEO_Rab->SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
   // Testor.test_default();
-  frc::CameraServer::GetInstance()->StartAutomaticCapture("cam", 0);
+  cam = frc::CameraServer::GetInstance()->StartAutomaticCapture("cam", 0);
+  cam.SetResolution(320,240);
 
   //Pneumatics::compressor->Start();
 }
@@ -40,6 +41,22 @@ void Robot::RobotInit() {
  * LiveWindow and SmartDashboard integrated updating.
  */
 void Robot::RobotPeriodic() {
+
+  if(m_revDigit.GetA())
+  {
+    Rabbit::SOL_de23 -> Set(frc::DoubleSolenoid::kForward);
+  }
+  else if(m_revDigit.GetB())
+  {
+    Rabbit::SOL_de23 -> Set(frc::DoubleSolenoid::kReverse);
+  }
+
+  // if(m_revDigit.GetAPressed())
+  // {
+  //   Rabbit::SOL_de23 -> Set((frc::DoubleSolenoid::Value) (3 - Rabbit::SOL_de23->Get()));
+  // }
+  
+
   
   // m_oi.blink->Set(-0.21);
 
@@ -61,10 +78,11 @@ void Robot::RobotPeriodic() {
  * robot is disabled.
  */
 void Robot::DisabledInit() {
-  // CargoIntake::CSM_NEO_Rab->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  CargoIntake::CSM_NEO_Rab->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
 }
 
 void Robot::DisabledPeriodic() {
+  
   m_revDigit.Display(frc::DriverStation::GetInstance().GetBatteryVoltage());
   frc::Scheduler::GetInstance()->Run(); 
   }
@@ -81,6 +99,8 @@ void Robot::DisabledPeriodic() {
  * the if-else structure below with additional strings & commands.
  */
 void Robot::AutonomousInit() {
+
+  Elevator::CE_Sub -> SetPosition(0);
   // std::string autoSelected = frc::SmartDashboard::GetString(
   //     "Auto Selector", "Default");
   // if (autoSelected == "My Auto") {

@@ -26,6 +26,8 @@ public:
 	static std::shared_ptr<RevDigit> self;
 	static std::shared_ptr<RevDigit> GetInstance();
 	static int last_volt;
+	static bool last_A;
+	static bool last_B;
 	
 	RevDigit();
 	void Init();
@@ -34,6 +36,10 @@ public:
 	bool GetA();
 	bool GetB();
 	double GetPotVoltage();
+
+
+	bool GetAPressed();
+	bool GetBPressed();
 
 private:
 	I2C *i2c;

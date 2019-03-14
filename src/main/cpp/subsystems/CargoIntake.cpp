@@ -28,7 +28,7 @@ CargoIntake::CargoIntake() : Subsystem("CargoIntake") {
 
   CE_Rab_Encoder.reset(new ytz5308::SparkMaxEncoder(*CSM_NEO_Rab));
 
-  VIC_775_Rab.reset(new WPI_VictorSPX(23));
+  VIC_775_Rab.reset(new WPI_VictorSPX(22));
   joystick.reset(new frc::Joystick(0));
 
   curPos = CE_Rab_Encoder->GetPosition();

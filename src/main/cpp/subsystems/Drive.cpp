@@ -60,8 +60,8 @@ Drive::Drive() : Subsystem("Drive") {
   CE_left->SetPositionConversionFactor(highModek);
   CE_right->SetPositionConversionFactor(highModek);
 
-  SCG_left = std::make_shared<frc::SpeedControllerGroup>(*CSM_NEO_left, *CSM_CIM_left);
-  SCG_right = std::make_shared<frc::SpeedControllerGroup>(*CSM_NEO_right, *CSM_CIM_right);
+  SCG_left = std::make_shared<frc::SpeedControllerGroup>(*CSM_NEO_left, *CSM_CIM_left, *CSM_NEO2_left);
+  SCG_right = std::make_shared<frc::SpeedControllerGroup>(*CSM_NEO_right, *CSM_CIM_right, *CSM_NEO2_right);
 
   SCG_left -> SetInverted(true);
   SCG_right -> SetInverted(true);
@@ -111,16 +111,21 @@ void Drive::Periodic(){
   {
     Pneumatics::drive_Mode0->Set((frc::DoubleSolenoid::Value) (3 - Pneumatics::drive_Mode0->Get()));
   }
-  else if(joystick->GetRawButton(3))
-  {
-    SCG_left->Set(0.2);
+  // else if(joystick->GetRawButton(3))
+  // {
+  //   SCG_left->Set(0.2);
     
-    SCG_right->Set(-0.2);
+  //   SCG_right->Set(-0.2);
+  // }
+  else if(joystick->GetRawButton(1))
+  {
+    ArcadeDrive(joystick->GetY() * 1.5,  - 0.9 * joystick->GetX(), true);
   }
   else
   {
-    ArcadeDrive(joystick->GetY(),  - joystick->GetX(), true);
+    ArcadeDrive(0.9 * joystick->GetY(),  - 0.9 * joystick->GetX(), true);
   }
+  
 
   #ifdef __DRIVE_OUT_PUT_Mode
   
@@ -141,7 +146,7 @@ void Drive::ArcadeDrive(double x, double y, bool squareInput = true)
   
   if (squareInput) {
     x = std::copysign( x * x, x);
-    y = std::copysign( y * y, y);
+    // y = std::copysign( y * y, y);
   }
 
   double leftOutput;
@@ -169,8 +174,8 @@ void Drive::ArcadeDrive(double x, double y, bool squareInput = true)
     }
   }
   
-  SCG_left -> Set(applyDeadBan(0.6 *leftOutput));
-  SCG_right -> Set(applyDeadBan(0.6 * rightOutput) * rightSideOpter );
+  SCG_left -> Set(applyDeadBan(0.8 *leftOutput));
+  SCG_right -> Set(applyDeadBan(0.8 * rightOutput) * rightSideOpter );
 
 }
 

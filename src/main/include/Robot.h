@@ -26,8 +26,10 @@
 #include <rev/CANSparkMax.h>
 
 
+
 class Robot : public frc::TimedRobot {
  public:
+  cs::UsbCamera cam;
   static RevDigit m_revDigit;
   static OI m_oi;
   static Pneumatics pneumatics;
